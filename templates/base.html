@@ -1,0 +1,202 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}transArad Rezvaninejad - Portfolio{% endblock %}</title>
+    <link rel="icon" href="/media/profiles/logo.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* Custom animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeInDown {
+            animation: fadeInDown 0.5s ease-out forwards;
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+        
+        /* Social icons hover effect */
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+        
+        .twitter:hover {
+            color: #1DA1F2 !important;
+        }
+        
+        .linkedin:hover {
+            color: #0077B5 !important;
+        }
+        
+        .facebook:hover {
+            color: #4267B2 !important;
+        }
+        
+        .instagram:hover {
+            color: #E1306C !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gray-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                   
+                        <span class="text-white">{% trans "Arad" %}</span>
+                        <span class="text-blue-400">{% trans "Rezvaninejad" %}</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <div class="flex space-x-6">
+                    </div>
+
+                    <div class="border-l border-gray-700 h-8 mx-2"></div>
+                    
+                    {% load i18n %}
+                    {% get_current_language as LANGUAGE_CODE %}
+                    <div class="relative">
+                        {% if LANGUAGE_CODE == 'fa' %}
+                            <a href="/en{{ request.get_full_path|slice:'3:' }}" 
+                            class="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors duration-300">
+                                <span>EN</span>
+                            </a>
+                        {% else %}
+                            <a href="/fa{{ request.get_full_path|slice:'3:' }}" 
+                            class="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors duration-300">
+                                <span>FA</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="border-l border-gray-700 h-8 mx-2"></div>
+                    <!-- دسکتاپ -->
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/aradrezvaninejad" target="_blank" class="social-icon text-gray-400 hover:text-white">
+                            <i class="fab fa-github text-lg"></i>
+                        </a>
+                        <a href="http://karlancer.com/profile/598697" target="_blank" class="social-icon text-gray-400 hover:text-white">
+                            <i class="fas fa-briefcase text-lg"></i> <!-- آیکون جایگزین برای کارلنسر -->
+                        </a>
+                        <a href="https://ir.linkedin.com/in/arad-rezvaninejad-95aa31349" target="_blank" class="social-icon linkedin text-gray-400 hover:text-blue-400">
+                            <i class="fab fa-linkedin-in text-lg"></i>
+                        </a>
+                    </div>
+                </nav>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M4 5h16v2H4zm0 6h16v2H4zm0 6h16v2H4z"/>
+                </svg>
+            </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="mobile-menu md:hidden mt-4">
+                <div class="flex flex-col space-y-4 px-2 py-4">
+
+                    <!-- لینک تغییر زبان -->
+                    {% get_current_language as LANGUAGE_CODE %}
+                    <div class="flex justify-start space-x-4 pt-2">
+                        {% if LANGUAGE_CODE == 'fa' %}
+                            <a href="/en{{ request.get_full_path|slice:'3:' }}" 
+                            class="text-gray-300 hover:text-white border border-gray-500 rounded px-3 py-1 transition duration-300">
+                            EN
+                            </a>
+                        {% else %}
+                            <a href="/fa{{ request.get_full_path|slice:'3:' }}" 
+                            class="text-gray-300 hover:text-white border border-gray-500 rounded px-3 py-1 transition duration-300">
+                            FA
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    <div class="flex space-x-6 pt-4">
+                            <a href="https://github.com/aradrezvaninejad" target="_blank" class="social-icon text-gray-400 hover:text-white transition">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="http://karlancer.com/profile/598697" target="_blank" class="social-icon text-gray-400 hover:text-white transition">
+                                <i class="fas fa-briefcase text-xl"></i>
+                            </a>
+                            <a href="https://ir.linkedin.com/in/arad-rezvaninejad-95aa31349" target="_blank" class="social-icon text-gray-400 hover:text-blue-400 transition">
+                                <i class="fab fa-linkedin-in text-xl"></i>
+                            </a>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}
+        <!-- محتوای اختصاصی هر صفحه -->
+        {% endblock %}
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btn = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+
+            btn.addEventListener('click', function () {
+                const isOpen = menu.classList.contains('max-h-96');
+
+                if (isOpen) {
+                    menu.classList.remove('max-h-96', 'opacity-100');
+                    menu.classList.add('max-h-0', 'opacity-0');
+                } else {
+                    menu.classList.remove('max-h-0', 'opacity-0');
+                    menu.classList.add('max-h-96', 'opacity-100');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
